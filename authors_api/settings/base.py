@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import json
 from pathlib import Path
 import environ
 env = environ.Env()
@@ -43,7 +44,8 @@ THIRD_PARTY_APPS = [
     "django_countries",
     "phonenumber_field",
     "drf_yasg",
-    "corsheaders"
+    "corsheaders",
+    "djcelery_email"
 ]
 
 
@@ -168,6 +170,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_URLS_REGEX = r"^/api/.*$"
 
 AUTH_USER_MODEL = "users.User"
+
+CELERY_BROKER_URL = env("CELERY_BROKER")
+CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
+CELERY_TIMEZONE = "UTC"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
 
 LOGGING = {
     "version": 1,
